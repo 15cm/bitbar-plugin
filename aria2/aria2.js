@@ -68,10 +68,10 @@ var taskStatusToString = status => {
         typeStr = '❎'
   }
   var sizeStr = bytesToReadable(status.size)
-  var percentageStr = sprintf(`[%-${progressWidth}s]%4.1f`,
+  var percentageStr = sprintf(`[%-${progressWidth}s]%-6.6s`,
                               (new Array(barLength)).fill('=').join(''),
-                              status.percentage * 100
-                             ) + '%'
+                              (status.percentage * 100).toFixed(1) + '%'
+                             )
   var resStr =  `${nameStr} ${typeStr} ${sizeStr} ${percentageStr}`
   if(status.type == 'active'){
     var speedStr = ` ⬇️${bytesToReadable(status.downloadSpeed, 1)}/s`
