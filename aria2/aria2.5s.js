@@ -1,4 +1,12 @@
 #!/usr/bin/env /path/to/the/node/executable
+//<bitbar.title>aria2</bitbar.title>
+//<bitbar.version>v1.0</bitbar.version>
+//<bitbar.author>15cm</bitbar.author>
+//<bitbar.author.github>15cm</bitbar.author.github>
+//<bitbar.desc>Show aria2 tasks in menu bar</bitbar.desc>
+//<bitbar.dependencies>node</bitbar.dependencies>
+//<bitbar.abouturl>https://github.com/15cm/bitbar-plugin</bitbar.abouturl>
+
 const bitbar = require('bitbar')
 const Aria2 = require('aria2')
 const path = require('path')
@@ -104,7 +112,8 @@ Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10)
     bitbarContent.push(
       {
         text: taskStatusToString(item),
-        font: 'Monaco'
+        font: 'Monaco',
+        refresh: true
       }
     )
   }
@@ -130,5 +139,5 @@ Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10)
 
   bitbar(bitbarContent)
 }).catch(err => {
-   console.log(err)
+   console.log('Loading...')
 })
