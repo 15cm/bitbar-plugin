@@ -94,6 +94,7 @@ Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10)
     bitbar.sep,
     {
       text: 'Active Tasks',
+      color: '#1b42eb'
     },
     bitbar.sep
   ]
@@ -113,7 +114,8 @@ Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10)
   // Other Tasks
   bitbarContent.push(
     {
-      text: 'Other Tasks'
+      text: 'Other Tasks',
+      color: '#7553fc'
     },
     bitbar.sep
   )
