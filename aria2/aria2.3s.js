@@ -87,57 +87,66 @@ var taskStatusToString = status => {
   }
   return resStr
 }
-Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10), aria2.tellStopped(-1,10)])
+aria2.open()
+.then(() => {
+  return Promise.all([aria2.getGlobalStat(), aria2.tellActive(), aria2.tellWaiting(-1,10), aria2.tellStopped(-1,10)])
+})
 .then(([gStat, activeTasks, waitingTasks, stoppedTasks]) => {
-  var activeTaskStatusList = activeTasks.map(genTaskStatus)
-  var waitingTasksStatusList = waitingTasks.map(genTaskStatus)
-  var stoppedTasksStatusList = stoppedTasks.map(genTaskStatus)
-  var otherTasksStatusList = waitingTasksStatusList.concat(stoppedTasksStatusList)
+    var activeTaskStatusList = activeTasks.map(genTaskStatus)
+    var waitingTasksStatusList = waitingTasks.map(genTaskStatus)
+    var stoppedTasksStatusList = stoppedTasks.map(genTaskStatus)
+    var otherTasksStatusList = waitingTasksStatusList.concat(stoppedTasksStatusList)
 
 
-  var bitbarContent = [
-    {
-      text: '💻  ⬇️ ' + bytesToReadable(gStat.downloadSpeed) + '/s'
-    },
-    bitbar.sep,
-    {
-      text: 'Active Tasks',
-      color: '#1b42eb'
-    },
-    bitbar.sep
-  ]
+    var bitbarContent = [
+      {
+        text: '💻  ⬇️ ' + bytesToReadable(gStat.downloadSpeed) + '/s'
+      },
+      bitbar.sep,
+      {
+        text: 'Active Tasks',
+        color: '#1b42eb'
+      },
+      bitbar.sep
+    ]
 
-  // Active Tasks
-  for(let item of activeTaskStatusList){
+    // Active Tasks
+    for(let item of activeTaskStatusList){
+      bitbarContent.push(
+        {
+          text: taskStatusToString(item),
+          font: 'Monaco',
+          refresh: true
+        }
+      )
+    }
+
+    bitbarContent.push(bitbar.sep)
+
+    // Other Tasks
     bitbarContent.push(
       {
-        text: taskStatusToString(item),
-        font: 'Monaco',
-        refresh: true
-      }
+        text: 'Other Tasks',
+        color: '#7553fc'
+      },
+      bitbar.sep
     )
-  }
-
-  bitbarContent.push(bitbar.sep)
-
-  // Other Tasks
-  bitbarContent.push(
-    {
-      text: 'Other Tasks',
-      color: '#7553fc'
-    },
-    bitbar.sep
-  )
-  for(let item of otherTasksStatusList){
-    if(item){
-      bitbarContent.push({
-        text: taskStatusToString(item),
-        font: 'Monaco'
-      })
+    for(let item of otherTasksStatusList){
+      if(item){
+        bitbarContent.push({
+          text: taskStatusToString(item),
+          font: 'Monaco'
+        })
+      }
     }
-  }
 
-  bitbar(bitbarContent)
-}).catch(err => {
-   console.log('Loading...')
+    bitbar(bitbarContent)
+    return aria2.close()
+})
+.then(() => {
+      process.exit()
+})
+.catch(err => {
+     console.log('Loading...')
+     process.exit()
 })
