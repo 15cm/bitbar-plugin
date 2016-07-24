@@ -1,4 +1,4 @@
-#BitBar Plugins
+# BitBar Plugins
 A repo of [BitBar](https://github.com/matryer/bitbar) plugins
 
 ## Aria2
@@ -13,10 +13,9 @@ cd bitbar-plugins
 npm install
 ```
 
-Modify aria2/aria2.js with your config:
+Modify aria2/aria2.1s.js with your config:
 
 - Node.js executable path (Written with some ES6 features. Test with v6.3.1)
 - aria2 config
 
-Then rename aria2/aria2.js to aria2/aria2.3s.js (Set refresh time as you like),
-and make a symbol link of it to your BitBar plugin folder.
+Then make a symbol link of aria2/aria2.1s.js to your BitBar plugin folder.
