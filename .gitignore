@@ -1,3 +1,4 @@
 aria2_*.*s.js
 node_modules/**
 make*.sh
+*.pyc
