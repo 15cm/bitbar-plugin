@@ -1,4 +1,5 @@
-aria2_*.*s.js
-node_modules/**
+aria2_*.*s.py
 make*.sh
 *.pyc
+/aria2/aria2_local.3s.py
+/aria2/aria2_remote.3s.py
