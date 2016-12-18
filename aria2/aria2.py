@@ -21,9 +21,11 @@ class Aria2:
         else:
             data_dict['params'] = params
         data = json.dumps(data_dict).encode('utf-8')
-        return json.loads(request.urlopen(self.url, data).read().decode('utf-8'))['result']
-
-    def getGlobalStat(self,):
+        res = ''
+        with request.urlopen(self.url, data) as req:
+            res = json.loads(req.read().decode('utf-8'))['result']
+        return res
+    def getGlobalStat(self):
         return self.call('getGlobalStat')
 
     def tellActive(self):
